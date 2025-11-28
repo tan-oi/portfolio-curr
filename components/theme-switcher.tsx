@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 const themes = [
   {
-    id: "dark",
+    id: "default",
     label: "Default",
     classes: "bg-zinc-900 text-white font-sans",
   },
@@ -66,7 +66,7 @@ export function ThemeSwitcher() {
             key={theme.id}
             onClick={() => handleThemeChange(theme.id)}
             className={`
-              group relative flex items-center justify-center p-1 rounded-sm shadow-sm transition-all duration-300 ease-out
+              group relative flex items-center justify-center p-1 rounded-sm shadow-sm transition-all duration-300 ease-out cursor-pointer
               ${theme.classes}
               ${
                 activeTheme === theme.id

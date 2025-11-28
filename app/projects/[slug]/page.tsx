@@ -1,6 +1,15 @@
 import { getProjectBySlug, getAllProjects } from "@/lib/projects";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { Cpu, Zap, Layout, Layers, ArrowRight, ArrowLeft, GitBranch,Map } from "lucide-react";
+import {
+  Cpu,
+  Zap,
+  Layout,
+  Layers,
+  ArrowRight,
+  ArrowLeft,
+  GitBranch,
+  Map,
+} from "lucide-react";
 import Link from "next/link";
 
 export async function generateStaticParams() {
@@ -17,7 +26,7 @@ const components = {
   Layers,
   ArrowRight,
   GitBranch,
-  Map
+  Map,
 };
 
 export default async function ProjectPage({
@@ -31,12 +40,14 @@ export default async function ProjectPage({
   return (
     <div className="bg-gradient min-h-screen">
       <div className=" max-w-4xl mx-auto px-4 py-12">
-        <Link href={"/projects"} className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 mb-6">
-          <ArrowLeft className="size-4"/>
+        <Link
+          href={"/projects"}
+          className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 mb-6"
+        >
+          <ArrowLeft className="size-4" />
           Back to projects
-
         </Link>
-        <div className="prose prose-invert prose-zinc max-w-none">
+        <div className="prose prose-invert prose-zinc max-w-none selection:bg-primary selection:text-primary-foreground">
           <MDXRemote source={project.content} components={components} />
         </div>
       </div>

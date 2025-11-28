@@ -14,7 +14,7 @@ interface ProjectCardProps {
   status?: "completed" | "wip" | "inactive";
   github?: string;
   image?: string;
-  slug: string;
+  slug?: string;
 }
 
 const statusConfig = {
@@ -82,7 +82,7 @@ export function ProjectCard({
           </div>
         </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+        <p className="text-sm text-muted-foreground leading-relaxed">
           {description}
         </p>
 
@@ -117,14 +117,16 @@ export function ProjectCard({
               {currentStatus.label}
             </p>
           </div>
-          <Link
-            href={`/projects/${slug}`}
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-xs font-medium hover:text-primary transition-colors ml-auto"
-          >
-            More details
-            <ArrowRight className="size-3" />
-          </Link>
+          {slug && (
+            <Link
+              href={`/projects/${slug}`}
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-xs font-medium hover:text-primary transition-colors ml-auto"
+            >
+              More details
+              <ArrowRight className="size-3" />
+            </Link>
+          )}
         </div>
       </div>
     </div>

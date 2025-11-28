@@ -17,10 +17,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Tanay - A fullstack dev",
-  description: "Personal portfolio of Tanay, a fullstack developer",
+  description: "",
   icons: {
     icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     images: ["/api/og"],
@@ -29,7 +28,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     images: ["/api/og"],
   },
-  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({

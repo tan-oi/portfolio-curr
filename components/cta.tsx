@@ -11,7 +11,7 @@ export default function CTA() {
   }, []);
   return (
     <button
-      className="py-2 px-4 text-sm bg-muted text-secondary-foreground rounded-xl flex gap-2 items-center hover:bg-secondary/80 transition-all group w-fit"
+      className="py-2 px-4 text-sm bg-muted text-secondary-foreground rounded-xl flex gap-2 items-center hover:bg-secondary/40 transition-all group w-fit"
       data-cal-namespace="30min"
       data-cal-link="tan-yay/30min"
       data-cal-config='{"layout":"month_view"}'

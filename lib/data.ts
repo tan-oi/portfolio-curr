@@ -6,14 +6,14 @@ export interface Project {
   link?: string;
   github?: string;
   image?: string;
-  status?: "completed" | "wip" | "inactive";
-  slug: string;
+  status: "completed" | "wip" | "inactive";
+  slug?: string;
 }
 
 export const projects: Project[] = [
   {
     id: "1",
-    title: "PPT",
+    title: "Glyph",
     slug: "ppt",
     description:
       "An AI-powered presentation tool with a rich library of layouts and widgets. Create stunning, shareable slide decks in seconds using generative AI.",
@@ -29,7 +29,6 @@ export const projects: Project[] = [
       "Zustand",
     ],
     link: "https://ppt-hazel.vercel.app/",
-    github: "https://github.com/tanay/nexus",
     image: "https://ik.imagekit.io/wqcnxo6ayi/ppt.png",
     status: "wip",
   },
@@ -71,19 +70,18 @@ export const projects: Project[] = [
   {
     id: "4",
     title: "Inagiffy",
-    slug: "giffy",
     description:
       "Generates personalized learning roadmaps in seconds. Built in a 5-hour sprint using the Gemini API to tailor paths based on your experience.",
     tags: ["next", "react", "TypeScript", "tailwind", "shadcn/ui"],
     link: "https://inagiffy-one.vercel.app/",
     github: "https://github.com/tan-oi/inagiffy",
-    image: "https://ik.imagekit.io/wqcnxo6ayi/tracker.png",
+    image: "https://ik.imagekit.io/wqcnxo6ayi/inagiffy.png",
     status: "completed",
   },
   {
     id: "5",
     title: "Testify",
-    slug: "testify",
+    // slug: "testify",
     description:
       "A feedback collection platform inspired by Testimonials.to. Create custom forms to gather testimonials and easily embed them into your site.",
     tags: [
@@ -97,7 +95,7 @@ export const projects: Project[] = [
     ],
     link: "https://testify-blond-six.vercel.app/",
     github: "https://github.com/tan-oi/testify",
-    image: "https://ik.imagekit.io/wqcnxo6ayi/tracker.png",
+    image: "https://ik.imagekit.io/wqcnxo6ayi/testify.png",
     status: "completed",
   },
   {

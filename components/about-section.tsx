@@ -7,7 +7,7 @@ export default function AboutSection() {
       <p className="text-muted-foreground leading-loose">
         Hey, i'm Tanay, who likes building stuff, and probably has this eternal
         hunch for wanting to reverse engineer things on web{" "}
-        <span className="italic text-accent">
+        <span className="italic text-foreground">
           (i'm 100% opening the networks tab on any new website to just try and
           understand the flow lol)
         </span>

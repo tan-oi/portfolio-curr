@@ -7,9 +7,9 @@ export default function CraftSection() {
     <>
       <section className="mb-24">
         <div className="mb-8">
-          <h2 className="text-2xl text-primary font-semibold">Featured</h2>
-          <p className="text-sm text-secondary">smol ui crafts</p>
-          <p className="italic text-muted-foreground">
+          <h2 className="text-sm text-muted-foreground font-semibold">Featured</h2>
+          <p className="text-2xl text-muted-foreground">smol ui crafts</p>
+          <p className="italic text-foreground">
             powered by my new found love towards motion
           </p>
         </div>

@@ -1,14 +1,16 @@
 ---
-title: "PPT - AI-Powered Presentation Builder"
+title: "Glyph - AI-Powered Presentation Builder"
 description: "A modern presentation creation tool inspired by Chronicle, helping users create stunning slides in minutes"
-tech: ["Next.js", "TypeScript", "Tailwind CSS", "OpenAI API", "Framer Motion"]
+tech: ["Next.js", "TypeScript", "Tailwind CSS", "shadcn", "groq apis", "Motion"]
 
 image: "/ppt.jpg"
 ---
 
 # From Frustration to Flow: Reimagining the Presentation Engine
 
-How a stressful academic project sparked a deep dive into frontend engineering, scaling architectures, and the future of generative UI.
+_Last updated: November 29, 2025_
+
+How a stressful academic deadline sparked an idea worth building—and everything I learned along the way.
 
 ---
 
@@ -16,29 +18,30 @@ How a stressful academic project sparked a deep dive into frontend engineering, 
 
 It started with a bottleneck.
 
-Me and my friends were building a project we loved, but we hit a wall: **Presentation Day.** I was tasked with building the slide decks. Despite my enthusiasm for the code, I found the act of pixel-pushing slides jarring. It was stressful, repetitive, and took hours of valuable development time.
+My friends and I were building a project, but we hit a wall: **Presentation Day.** I got stuck with making the slide deck. Despite loving the code we'd written, pixel-pushing slides felt jarring. It was stressful, repetitive, and ate up hours we didn't have.
 
-Then, I discovered _Chronicle_. I was **completely blown away** by the fluidity of their interface. It wasn't just about "making slides"—it was about how the data flowed, how the AI reasoned, how the viewport adapted. I became obsessed.
+Then after a few days of searching for a better option which could help next time, I discovered [_Chronicle_](https://chroniclehq.com/). I was **completely blown away** by how effortless it felt. It wasn't just about "making slides", it was about getting something polished instantly, with zero friction. I got hooked.
 
-I spent hours inspecting their network requests, reverse-engineering their architecture, trying to understand the magic. The way they handled state management, the streaming responses, the real-time canvas updates—it was all so elegant. _Chronicle_ wasn't just a tool; it was a masterclass in frontend engineering.
+I spent hours inspecting their network requests, try to dissect the architecture, trying to understand the magic. The way they handled state management, the streaming responses, the real-time updates, it seemed cool. Chronicle stopped being just a tool and became something I was genuinely curious about. Maybe because I'd never seen anything like it, or maybe it was just how well-crafted the product felt.
 
-**That deep dive changed everything.** I didn't just want to use a tool like this—I wanted to _build_ one. Not just to solve my own frustration, but to master the engineering required to build a complex, viewport-aware, AI-driven design tool from the ground up.
+**That deep dive changed everything.** I didn't just want to use a tool like this, I wanted to _build_ one. Not just to solve my own frustration, but to satisfy my curiosity and challenge myself as an engineer.
 
 ---
 
 ## The Vision
 
-**3 Clicks to Done.**
+**4 Clicks to Done.**
 
 I wanted to strip away the noise and build a platform where users could:
 
-1.  **Create** custom decks from scratch or a simple prompt.
-2.  **Refine** the AI's logic by editing outlines before pixel generation.
-3.  **Deploy** instantly to the web.
+1.  **Create** custom decks from a simple prompt
+2.  **Refine** the AI's outline before generating slides
+3.  **Edit** with a smooth, intuitive interface
+4.  **Share** in one click
 
 ### The Stack
 
-**Next.js** • **TypeScript** • **Tiptap** • **Zustand** • **Redis** • **Shadcn** • **Tailwind**
+**Next.js** • **React** • **Tiptap** • **Prisma** • **Zustand** • **Redis** • **Shadcn** • **Tailwind** • **PostgreSQL** • **Better-Auth**
 
 ---
 
@@ -46,51 +49,63 @@ I wanted to strip away the noise and build a platform where users could:
 
 ### 1. The "Ghost" State (Redis Optimization)
 
-One of the most interesting challenges was distinguishing between a "fresh" AI generation and a presentation that already exists. I could have hammered the primary database, but that felt inefficient.
+One of the most interesting challenges was distinguishing between a fresh AI generation and a presentation that already exists. I could have just hammered the database, one request isn't too much, but that felt monotonous, like something I'd been doing forever. I was a bit stubborn about finding a different approach. I nudged my brain and came up with a few solutions: some wildly ineffective, some that still hit the database. But one felt interesting and taught me something new.
 
 **The Solution:**
-I implemented an ephemeral state utilizing **Redis**.
+I implemented an ephemeral state layer using **Redis**.
 
-- When a user hits `/create/generate`, I assign a temporary ID to the outline.
-- This "idea" is stored in Redis with a **5-minute TTL (Time To Live)**.
-- I use `GETDEL` to retrieve the data. This atomic operation fetches the prompt and immediately deletes it from the cache.
-- _Result:_ Zero stale data, reduced DB load, and a snappy user experience.
+- When a user hits `/create/generate` and generates an outline, I assign it a unique ID
+- This ID is stored in Redis with a **5-minute TTL (Time To Live)**
+- I use `GETDEL` to retrieve the data—an atomic operation that fetches the prompt and immediately deletes it from the cache
+- _Result:_ Zero stale data, reduced database load, and a snappy user experience
 
 ### 2. Pixel-Perfect Consistency (The Scaling Engine)
 
-Preventing layout shifts across devices is the hardest part of presentation software. A slide on a phone must look identical to a slide on a 4k monitor.
+Here's a problem that bugged me for days: slides needed to look identical on every screen. Sounds simple, right? But presentations are weird they're not really "responsive" content. A slide deck on your laptop should look _exactly_ the same when projected on a massive screen, down to the pixel.
+.
 
 **The Fix:**
-I bypassed standard responsive breakpoints for the slide canvas. Instead, I engineered a scaling system using CSS `transform`.
+I ditched responsive breakpoints entirely for the slide canvas. Instead, I built a scaling system using CSS `transform`.
 
-- The slide container has a fixed logical `Height x Width`.
-- The app calculates the user's viewport and applies a scale factor.
-- This ensures the AI never generates "falsy" content due to layout shifts—what you see is exactly what you present.
+- The slide container has a fixed logical size, let's say 1920×1080
+- The app calculates the viewport dimensions and applies a scale factor to fit
+- The content itself never reflows,it just scales up or down proportionally
+- What you see in the editor is _exactly_ what gets presented, every single time
 
 ### 3. Optimistic UI Updates (Buffer State Pattern)
 
-Real-time editing needs to feel instant, but hammering the state store on every keystroke kills performance.
+Slide edits needed to feel instant. Any lag during editing would kill the user experience, and disrupt the flow while tailoring according to needs.
 
 **The Approach:**
 I implemented a buffer state layer between the editor and the main presentation store.
 
-- Widget updates are captured in a local buffer during active editing.
-- On blur (losing focus), the buffer commits to the main Zustand store.
-- An auto-save mechanism periodically syncs the store to the database.
-- _Result:_ Buttery-smooth editing with zero lag, while maintaining data integrity and automatic persistence.
-
----
+- Widget updates are captured in a local buffer during active editing
+- On blur (when you click away), the buffer commits to the main Zustand store
+- An auto-save mechanism periodically syncs the store to the database
+- _Result:_ Buttery-smooth editing with zero lag, while maintaining data integrity and automatic persistence
 
 ## What I Learned
 
-Building this platform taught me that **constraint is a feature.**
+**1. Constraint is a feature, not a limitation.**
 
-Early on, I thought I needed infinite widgets. I learned that after a certain point, everything starts to look the same. The real value lies in a curated set of flexible, high-quality components that users can remix, rather than an infinite list of rigid templates.
+Early on, I thought I needed infinite widget options. I quickly learned that after a certain point, everything starts to look the same. The real value lies in a curated set of flexible, high-quality components that users can reuse, not an endless list of rigid templates.
 
-## Roadmap
+**2. Planning matters, even when it's rough.**
 
-**BYOK Support** - "Bring Your Own Key" for power users who want to use their own LLM quotas.
+Having even a loose blueprint helped me spot potential issues early and build with intention. My "project management system" was just pen, paper, and a tasks.md file, sometimes simple tools are the best tools. Building something I actually was curious and looked forward to kept me motivated and helped me see problems from a user's perspective, not just an engineer's.
 
-**Advanced Layouts** - Expanding the widget library with interactive data visualizations.
+---
 
-**Importing background and themes** - Allowing users to bring in their own set of background and create the themes that suits their needs.
+## What's Next
+
+**BYOK Support** – "Bring Your Own Key" for users who want to use their own LLM API quotas
+
+**Advanced Layouts** – Expanding the widget library with interactive data visualizations
+
+**Custom Themes** – Allowing users to import their own backgrounds and create themes that fit their brand
+
+**Performance Optimization** – Continuing to refine load times and smooth out any remaining UI jank
+
+---
+
+This project taught me that the best solutions often come from scratching your own itch. What started as frustration with a school deadline turned into a deep dive on state management, caching strategies, and building products people actually enjoy using.

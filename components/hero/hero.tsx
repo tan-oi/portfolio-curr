@@ -16,7 +16,7 @@ export function Hero() {
           <span className="tracking-tight text-2xl ml-2">I'm Tanay </span>
         </h1>
         <p className="text-muted-foreground leading-relaxed max-w-md">
-          I write <span className="text-secondary font-bold">code</span> with a
+          I write <span className="text-accent font-bold">code</span> with a
           sprinkle of chaos and a lot of caffeine. Focused on making things
           cool, fun to use, and i learn things by messing around on the internet
           haha.
