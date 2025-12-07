@@ -1,22 +1,13 @@
-import { Globe, ArrowRight } from "lucide-react";
+import { Globe, ArrowRight, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import Github from "../icons/github";
 import { ICON_REGISTRY } from "../icons/registry";
 import { TooltipWrapper } from "../ui/tooltip-wrapper";
+import { Project } from "@/lib/data";
 
-interface ProjectCardProps {
-  title: string;
-  description: string;
-  tags: string[];
-  link?: string;
-  status?: "completed" | "wip" | "inactive";
-  github?: string;
-  image?: string;
-  slug?: string;
-}
-
+export type ProjectCardProps = Omit<Project, "id"> 
 const statusConfig = {
   wip: {
     label: "Work in progress",
@@ -41,9 +32,9 @@ export function ProjectCard({
   github,
   image,
   slug,
+  video,
 }: ProjectCardProps) {
   const currentStatus = statusConfig[status];
-
   return (
     <div className="group flex flex-col rounded-xl overflow-hidden bg-card border border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full">
       <div className="relative w-full aspect-video bg-muted">
@@ -75,6 +66,19 @@ export function ProjectCard({
                     className="text-muted-foreground hover:text-primary bg-transparent hover:bg-transparent hover:scale-110 cursor-pointer"
                   >
                     <Github className="size-5 font-bold" />
+                  </Button>
+                </Link>
+              </TooltipWrapper>
+            )}
+
+            {video && (
+              <TooltipWrapper content="Watch a video demo">
+                <Link href={video} target="_blank">
+                  <Button
+                    size="icon-sm"
+                    className="text-muted-foreground hover:text-primary bg-transparent hover:bg-transparent hover:scale-110 cursor-pointer"
+                  >
+                    <Play className="size-5 font-bold" />
                   </Button>
                 </Link>
               </TooltipWrapper>

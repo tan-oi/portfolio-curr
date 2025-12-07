@@ -42,6 +42,7 @@ export default function ProjectsPage() {
               github={item.github}
               image={item.image}
               slug={item.slug}
+              video={item.video}
             />
           ))}
         </div>

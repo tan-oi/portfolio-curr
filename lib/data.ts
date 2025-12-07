@@ -8,6 +8,7 @@ export interface Project {
   image?: string;
   status: "completed" | "wip" | "inactive";
   slug?: string;
+  video?: string;
 }
 
 export const projects: Project[] = [
@@ -28,9 +29,10 @@ export const projects: Project[] = [
       "Better-auth",
       "Zustand",
     ],
-    link: "https://ppt-hazel.vercel.app/",
+    link: "https://glyph.tanaybuild.dev",
     image: "https://ik.imagekit.io/wqcnxo6ayi/ppt.png",
     status: "wip",
+    video: "https://www.youtube.com/watch?v=V33sitDROyg",
   },
   {
     id: "2",
@@ -50,9 +52,10 @@ export const projects: Project[] = [
       "Zustand",
       "Better-auth",
     ],
-    link: "https://flowdoc-delta.vercel.app/",
+    link: "https://flowdocs.tanaybuild.dev",
     github: "https://github.com/tan-oi/flowdoc",
     image: "https://ik.imagekit.io/wqcnxo6ayi/flowdocs.png",
+    video: "https://www.youtube.com/watch?v=EyPwyjhCJvY",
     status: "completed",
   },
   {
@@ -64,6 +67,7 @@ export const projects: Project[] = [
     link: "https://tracker-three-rho.vercel.app/",
     github: "https://github.com/tan-oi/tracker",
     image: "https://ik.imagekit.io/wqcnxo6ayi/tracker.png",
+    video: "https://youtu.be/QWej_nhIF-c",
     slug: "tracker",
     status: "completed",
   },
@@ -96,6 +100,7 @@ export const projects: Project[] = [
     link: "https://testify-blond-six.vercel.app/",
     github: "https://github.com/tan-oi/testify",
     image: "https://ik.imagekit.io/wqcnxo6ayi/testify.png",
+    video: "https://www.youtube.com/watch?v=kETYUSYRjnU",
     status: "completed",
   },
   {
@@ -123,6 +128,6 @@ export const contactTags = [
   },
   {
     iconTag: "x",
-    href: "https://x.com/tan0i",
+    href: "https://x.com/tan0i_",
   },
 ];

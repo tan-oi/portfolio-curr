@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import LocalTime from "@/components/local-time";
+import UmamiAnalytics from "@/components/analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,9 +19,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Tanay - A fullstack dev",
   description: "",
-  icons: {
-    icon: "/favicon.ico",
-  },
+  // icons: {
+  //   icon: "/app/favicon.ico",
+  // },
   openGraph: {
     images: ["/api/og"],
   },
@@ -44,6 +45,7 @@ export default function RootLayout({
           <ThemeSwitcher />
           <LocalTime />
           {children}
+          <UmamiAnalytics />
         </ThemeProvider>
       </body>
     </html>

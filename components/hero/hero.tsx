@@ -61,7 +61,7 @@ export function Hero() {
           })}
 
           <TooltipWrapper content="Email">
-            <Link href={`mailto:tanay.dev.x@gmail.com`}>
+            <Link href={`mailto:tan.dev.x@gmail.com`}>
               <div className="text-muted-foreground hover:text-primary transition-colors">
                 <Mail />
               </div>

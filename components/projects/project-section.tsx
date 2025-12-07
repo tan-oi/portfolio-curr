@@ -32,6 +32,7 @@ export default function ProjectSection() {
               github={item.github}
               image={item.image}
               slug={item.slug}
+               video={item.video}
             />
           ))}
         </div>
